@@ -28,7 +28,7 @@ public class ProdutoController {
 	private RemoveProdutoService removeProdutoService;
 	
 	@PostMapping("/produtos")
-	public ResponseEntity<ProdutoResponse> salvar(@RequestBody ProdutoRequest produtoRequest) throws ValorInvalido {
+	public ResponseEntity<ProdutoResponse> salvar(@RequestBody ProdutoRequest produtoRequest) throws ValorInvalidoException {
 		HttpStatus status = HttpStatus.CREATED;
         ProdutoResponse saved = adicionaProdutoService.inserir(produtoRequest);
         return new ResponseEntity<>(saved, status);

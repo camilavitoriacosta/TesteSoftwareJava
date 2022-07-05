@@ -14,7 +14,7 @@ public class AdicionaProdutoService {
 		this.produtoRepository = produtoRepository;
 	}
 	
-	public ProdutoResponse inserir(ProdutoRequest produtoRequest) throws ValorInvalido {
+	public ProdutoResponse inserir(ProdutoRequest produtoRequest) throws ValorInvalidoException {
 		Produto produto = new Produto(produtoRequest.getDescricao(), produtoRequest.getValorUnitario());
 		produtoRepository.save(produto);
 		return new ProdutoResponse(produto.getId(), produto.getDescricao(), produto.getValorUnitario());
