@@ -1,6 +1,9 @@
 package com.example.testingweb.produto;
 
-import java.util.ArrayList;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.springframework.http.HttpHeaders;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +31,13 @@ public class ProdutoController {
 	private RemoveProdutoService removeProdutoService;
 	
 	@PostMapping("/produtos")
-	public ResponseEntity<ProdutoResponse> salvar(@RequestBody ProdutoRequest produtoRequest) throws ValorInvalidoException {
+	public ResponseEntity<ProdutoResponse> salvar(@RequestBody ProdutoRequest produtoRequest) throws ValorInvalidoException, URISyntaxException {
 		HttpStatus status = HttpStatus.CREATED;
         ProdutoResponse saved = adicionaProdutoService.inserir(produtoRequest);
-        return new ResponseEntity<>(saved, status);
+		URI location = new URI("/api/produtos/" + saved.getId());
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.setLocation(location);
+        return new ResponseEntity<>(saved, responseHeaders ,status);
 	}
 
 	@GetMapping("/produtos")
